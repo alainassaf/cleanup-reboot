@@ -1,49 +1,32 @@
-# run-delprof2
-Runs delprof2.exe on servers in the selected Worker Group
+# cleanup-reboot
+Checks if a server is online, has logins allowed, but has no users. If this is found, the script sets the Logon mode to ProhibitLogonsUntilServerRestart
 
 #Contributions to this script
 I'd like to highlight the posts that helped me write this scrip below.
-* https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
-* https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
-* https://blogs.msdn.microsoft.com/powershell/2006/10/14/windows-powershell-exit-codes/
-* https://blogs.msdn.microsoft.com/kebab/2013/06/09/an-introduction-to-error-handling-in-powershell/
-* https://technet.microsoft.com/en-us/library/ff730949.aspx
-* https://msdn.microsoft.com/en-us/powershell/scripting/getting-started/cookbooks/selecting-items-from-a-list-box
-* http://stackoverflow.com/questions/25187048/run-executable-from-powershell-script-with-parameters
-* http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
+* http://carlwebster.com/finding-offline-servers-using-powershell-part-1-of-4/
+* http://blog.itvce.com/?p=79 Created by Dane Young
 
-# get-help .\run-delprof2.ps1 -full
+# $ get-help .\cleanup-reboot.ps1 -full
 
-NAME
-    run-delprof2.ps1
+NAME<br>
+    cleanup-reboot.ps1
     
-SYNOPSIS
-    Runs delprof2.exe on servers in the selected Worker Group
+SYNOPSIS<br>
+    Script that checks if a server is online, has logins allowed, but has no users. If this is found, the script sets the Logon mode to ProhibitLogonsUntilServerRestart
     
-SYNTAX
-    run-delprof2.ps1 [[-XMLBrokers] <Object>] [[-Delproflocation] <Object>] [<CommonParameters>]
+SYNTAX<br>
+    PS> cleanup-reboot.ps1 [[-DeliveryControllers] <Object>] [<CommonParameters>]
     
-    
-DESCRIPTION
-    Runs delprof2.exe on servers in the selected Worker Group
-    This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin.
-    
+DESCRIPTION<br>
+    Script that checks if a server is online, has logins allowed, but has no users. If this is found, the script sets the Logon mode to     ProhibitLogonsUntilServerRestart. It is recommended that this script be run as a Citrix admin. In addition, the Citrix Powershell modules should be installed
+
 PARAMETERS
-    -XMLBrokers <Object>
-        Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
+    -DeliveryControllers <Object>
+        Required parameter. Which Citrix Delivery Controller(s) (farm) to query.
         
         Required?                    false
         Position?                    1
-        Default value                CITRIXXMLBROKER
-        Accept pipeline input?       false
-        Accept wildcard characters?  false
-        
-    -Delproflocation <Object>
-        Optional parameter. Location of Delprof2.exe.
-        
-        Required?                    false
-        Position?                    2
-        Default value                C:\Delprof2 1.6.0\delprof2.exe
+        Default value                YOURDDC.DOMAIN.LOCAL
         Accept pipeline input?       false
         Accept wildcard characters?  false
         
@@ -53,39 +36,38 @@ PARAMETERS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see 
         about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
-INPUTS
-    None
+INPUTS<br>
+    None.
     
-OUTPUTS
-    None
+OUTPUTS<br>
+    None. The script will generate an report via email of any servers that are not servicing users.
     
 NOTES
-    
-        NAME        :  run-delprof2
-        VERSION     :  1.04
-        LAST UPDATED:  2/6/2017
-        AUTHOR      :  Alain Assaf
+        NAME: cleanup-reboot.ps1
+        VERSION: 1.02
+        CHANGE LOG - Version - When - What - Who
+        1.00 - 12/12/2016 - Initial script - Alain Assaf
+        1.01 - 1/03/2017 - Added test to check RDP, ICA, and Session Reliability ports before setting LogOnMode to reboot - Alain Assaf
+        1.02 - 1/04/2017 - Added lines to check server load. If server has no users and a load higher than 3500, then change LogOnMode                              to reboot - Alain Assaf
+        AUTHOR: Alain Assaf
+        LASTEDIT: January 04, 2017
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS C:\PSScript >.\run-delprof2.ps1
-   
+    PS C:\PSScript>.\cleanup-reboot.ps1
+    
     Will use all default values.
+    Will query servers in the default Farm and find servers that are not servicing users.
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS C:\PSScript >.\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
+    PS C:\PSScript>.\cleanup-reboot.ps1 -DeliveryController YOURDDC.DOMAIN.LOCAL
     
-    Will use "XMLBROKER" to query XenApp farm.
-    
-    -------------------------- EXAMPLE 3 --------------------------
-    
-    PS C:\>.\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
-    
-    Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
+    Will use YOURDDC.DOMAIN.LOCAL for the delivery controller address.
+    Will query servers in the YOURDDC.DOMAIN.LOCAL Farm and find servers that are not servicing users.
     
 # Legal and Licensing
-The run-delprof2.ps1 script is licensed under the [MIT license][].
+The cleanup-reboot.ps1 script is licensed under the [MIT license][].
 
 [MIT license]: LICENSE
 
