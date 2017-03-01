@@ -40,17 +40,17 @@ INPUTS<br>
     None.
     
 OUTPUTS<br>
-    None. The script will generate an report via email of any servers that are not servicing users.
+    None. (Optional - The script will generate an report via email of any servers that are not servicing users.)
     
-NOTES
-        NAME: cleanup-reboot.ps1
-        VERSION: 1.02
-        CHANGE LOG - Version - When - What - Who
-        1.00 - 12/12/2016 - Initial script - Alain Assaf
-        1.01 - 1/03/2017 - Added test to check RDP, ICA, and Session Reliability ports before setting LogOnMode to reboot - Alain Assaf
-        1.02 - 1/04/2017 - Added lines to check server load. If server has no users and a load higher than 3500, then change LogOnMode                              to reboot - Alain Assaf
-        AUTHOR: Alain Assaf
-        LASTEDIT: January 04, 2017
+NOTES<pre>
+    NAME: cleanup-reboot.ps1
+    VERSION: 1.02
+    CHANGE LOG - Version - When - What - Who
+    1.00 - 12/12/2016 - Initial script - Alain Assaf
+    1.01 - 1/03/2017 - Added test to check RDP, ICA, and Session Reliability ports before setting LogOnMode to reboot - Alain Assaf
+    1.02 - 1/04/2017 - Added lines to check server load. If server has no users and a load higher than 3500, then change LogOnMode                              to reboot - Alain Assaf
+    AUTHOR: Alain Assaf
+    LASTEDIT: January 04, 2017</pre>
     
     -------------------------- EXAMPLE 1 --------------------------
     
