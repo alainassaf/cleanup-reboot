@@ -41,30 +41,9 @@ Param(
 )
  
 #Constants
-#$ErrorActionPreference= 'silentlycontinue'
 $PSSnapins = ("Citrix*")
-$PSModules = ("Citrix*")
 $WORKERGROUPS = "Zone Data Collectors,Productivity Apps" #Define which worker groups should be processed. Comma seperated list, spaces acceptable, case insensitive (for example "Zone Data Collectors,Productivity Apps"). Leaving blank will process all servers in the farm as in previous revisions
 $EXCLUDESERVERS = "CORPCTX01,CORPCTX02,CORPCTX05" #Define which servers should be excluded from processing. Comma seperated list, short names only, case insensitive (for example "CORPCTX01,CORPCTX02,CORPCTX05")
- 
-
-### START FUNCTION: get-mymodule #####################################################
-Function Get-MyModule {
-    Param([string]$modules)
-    $ErrorActionPreference= 'silentlycontinue'
-        foreach ($mod in $modules.Split(",")) {
-            if(-not(Get-Module -name $mod)) {
-                if(Get-Module -ListAvailable | Where-Object { $_.name -like $mod }) {
-                    Import-Module -Name $mod
-                } else {
-                    write-warning "$mod PowerShell Module not available."
-                    write-warning "Please run this script from a system with the $mod PowerShell Module is installed."
-                    exit 1
-                }
-            }
-        }
-}
-### END FUNCTION: get-mymodule #####################################################
  
 ### START FUNCTION: get-mysnapin ###################################################
 Function Get-MySnapin {
@@ -109,7 +88,6 @@ function Test-Port{
 ### END FUNCTION: test-port ########################################################
 
 #Import Module(s) and Snapin(s)
-get-mymodule $PSModules
 get-MySnapin $PSSnapins
 
 
