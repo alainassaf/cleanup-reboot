@@ -42,7 +42,7 @@ Param(
  
 #Constants
 $PSSnapins = ("Citrix*")
-$WORKERGROUPS = "Zone Data Collectors,Productivity Apps" #Define which worker groups should be processed. Comma seperated list, spaces acceptable, case insensitive (for example "Zone Data Collectors,Productivity Apps"). Leaving blank will process all servers in the farm as in previous revisions
+$WORKERGROUPS = "Zone Data Collectors,Productivity Apps" #Define which worker groups should be processed. Comma seperated list, spaces acceptable, case insensitive (for example "Zone Data Collectors,Productivity Apps")
 $EXCLUDESERVERS = "CORPCTX01,CORPCTX02,CORPCTX05" #Define which servers should be excluded from processing. Comma seperated list, short names only, case insensitive (for example "CORPCTX01,CORPCTX02,CORPCTX05")
  
 ### START FUNCTION: get-mysnapin ###################################################
